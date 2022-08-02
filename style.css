@@ -1,0 +1,28 @@
+.container {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10%;
+}
+
+.ingredient {
+    background-color: rgb(177, 73, 35);
+    font-size: 1.7vw;
+    color: white;
+    display: grid;
+    padding: 10px;
+    margin: 5px;
+    width: 20vw;
+    border: none;
+    border-radius: 5px;
+    border-color: white;
+}
+
+.ingredient:active {
+    background: rgb(108, 67, 17);
+}
+
+body {
+    margin: 0 0 0 0;
+    background-color: rgb(215, 215, 215);
+}

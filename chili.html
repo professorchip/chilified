@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="container">
+        <button class="ingredient" data-ingredient="beef">Add Beef</button>
+        <div class="quantity" data-ingredient="beef">There is pounds of beef</div>
+        <button class="ingredient" data-ingredient="onion">Add Onion</button>
+        <div class="quantity" data-ingredient="onion">There is onions</div>
+        <button class="ingredient" data-ingredient="garlic">Add Garlic</button>
+        <div class="quantity" data-ingredient="garlic">There is cloves of garlic</div>
+        <button class="ingredient" data-ingredient="chilipowder">Add Chili Powder</button>
+        <div class="quantity" data-ingredient="chilipowder">There is tablespoons of Chili Powder</div>
+        <button class="ingredient" data-ingredient="beans">Add Can of Beans</button>
+        <div class="quantity" data-ingredient="beans">There are cans of beans</div>
+    </div>
+</body>
+<script>
+    const ingredients = {
+        beef: {
+            name: 'beef',
+            qty: 1,
+            unit: 'pound',
+        },
+        onion: {
+            name: 'onion',
+            qty: 3,
+            unit: 'onion'
+        },
+        garlic: {
+            name: 'garlic',
+            qty: 3,
+            unit: 'clove',
+        },
+        chilipowder: {
+            name: 'chili powder',
+            qty: 1,
+            unit: 'tablespoon',
+        },
+        beans: {
+            name: 'beans',
+            qty: 5,
+            unit: 'can',
+        },
+    }
+
+    const ingredientButtons = document.querySelectorAll('.ingredient');
+
+
+    function pluralize(input, qty) {
+        const item = ingredients[input];
+        const ingName = item.name;
+        const ingQty = item.qty;
+        const ingUnit = item.unit;
+        if (ingQty === 1) {
+            // console.log('only 1');
+            return `${ingUnit}`;
+        } else {
+            // console.log('more than 1');
+            return `${ingUnit}s`;
+        }
+    }
+
+    function isAre(qty) {
+        return qty === 1 ? 'is' : 'are';
+    }
+
+    function ingredientSentence(input) {
+        // const pluralityVariance = pluralize(input.unit, qty);
+        const item = ingredients[input];
+        const qty = item.qty;
+        const food = input;
+        const sentence = `There ${isAre(qty)} ${qty} ${pluralize(String(input), qty)} of ${input}`;
+        return sentence;
+    }
+
+    function handleClick(event) {
+        console.log(event.target.dataset.ingredient);
+    }
+
+    ingredientButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+            //console.log(event.target.dataset.ingredient);
+            console.log(ingredientSentence(event.target.dataset.ingredient));
+        });
+    })
+
+
+</script>
+
+</html>
