@@ -83,13 +83,12 @@
     }
 
     function handleClick(event) {
-        console.log(event.target.dataset.ingredient);
+        console.log(ingredientSentence(event));
     }
 
     ingredientButtons.forEach((button) => {
         button.addEventListener('click', (event) => {
-            //console.log(event.target.dataset.ingredient);
-            console.log(ingredientSentence(event.target.dataset.ingredient));
+            handleClick(event.target.dataset.ingredient)
         });
     })
 
