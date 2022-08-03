@@ -5,22 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chili-fied</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
     <div class="container">
-        <button class="ingredient" data-ingredient="beef">Add Beef</button>
-        <div class="quantity" data-ingredient="beef">There is pounds of beef</div>
-        <button class="ingredient" data-ingredient="onion">Add Onion</button>
-        <div class="quantity" data-ingredient="onion">There is onions</div>
-        <button class="ingredient" data-ingredient="garlic">Add Garlic</button>
-        <div class="quantity" data-ingredient="garlic">There is cloves of garlic</div>
-        <button class="ingredient" data-ingredient="chilipowder">Add Chili Powder</button>
-        <div class="quantity" data-ingredient="chilipowder">There is tablespoons of Chili Powder</div>
-        <button class="ingredient" data-ingredient="beans">Add Can of Beans</button>
-        <div class="quantity" data-ingredient="beans">There are cans of beans</div>
+        <div class="ingredients">
+            <button class="ingredient" data-ingredient="beef">Add Beef</button>
+            <button class="ingredient" data-ingredient="onion">Add Onion</button>
+            <button class="ingredient" data-ingredient="garlic">Add Garlic</button>
+            <button class="ingredient" data-ingredient="chilipowder">Add Chili Powder</button>
+            <button class="ingredient" data-ingredient="beans">Add Can of Beans</button>
+        </div>
+        <div class="recipecontainer">
+            <div class="recipetitle">Recipe:</div>
+            <div class="quantity recipeingredient" data-ingredient="beef"> - 1 pound of beef</div>
+            <div class="quantity recipeingredient" data-ingredient="onion"> - 1 onion</div>
+            <div class="quantity recipeingredient" data-ingredient="garlic"> - 1 clove of garlic</div>
+            <div class="quantity recipeingredient" data-ingredient="chilipowder"> - 1 tablespoon of chili powder</div>
+            <div class="quantity recipeingredient" data-ingredient="beans"> - 1 can of beans</div>
+        </div>
     </div>
 </body>
 <script>
@@ -32,12 +37,12 @@
         },
         onion: {
             name: 'onion',
-            qty: 3,
+            qty: 1,
             unit: 'onion'
         },
         garlic: {
             name: 'garlic',
-            qty: 3,
+            qty: 1,
             unit: 'clove',
         },
         chilipowder: {
@@ -47,13 +52,15 @@
         },
         beans: {
             name: 'beans',
-            qty: 5,
+            qty: 1,
             unit: 'can',
         },
     }
 
-    const ingredientButtons = document.querySelectorAll('.ingredient');
-
+    const ingredientButtons = document.querySelectorAll('.ingredient'); // Each 'Add' ingredient button
+    const recipeLines = document.querySelectorAll('.recipeingredient'); // Lines in the recipe section
+    const recipe = []; // An array of the lines in the recipe section
+    const recipeMap = new Map();
 
     function pluralize(input, qty) {
         const item = ingredients[input];
@@ -74,23 +81,41 @@
     }
 
     function ingredientSentence(input) {
-        // const pluralityVariance = pluralize(input.unit, qty);
+        // console.log(input);
         const item = ingredients[input];
         const qty = item.qty;
         const food = input;
-        const sentence = `There ${isAre(qty)} ${qty} ${pluralize(String(input), qty)} of ${input}`;
+        const sentence = ` - ${qty} ${pluralize(String(input), qty)} of ${input}`;
         return sentence;
     }
 
-    function handleClick(event) {
-        console.log(ingredientSentence(event));
+    function refreshRecipe(buttomItem, target) {
+        recipeLines.forEach((item) => {
+            if (target.dataset.ingredient === item.dataset.ingredient) {
+                item.innerText = ingredientSentence(buttomItem);
+                console.log('recipe changed');
+            }
+        })
+    }
+
+    function handleClick(buttomItem, target) {
+        // Increment ingredient clicked
+        const ingredientsObject = ingredients[buttomItem];
+        ingredientsObject.qty++;
+        // Update page with new value
+        refreshRecipe(buttomItem, target);
     }
 
     ingredientButtons.forEach((button) => {
         button.addEventListener('click', (event) => {
-            handleClick(event.target.dataset.ingredient)
+            handleClick(event.target.dataset.ingredient, event.target);
         });
     })
+
+    recipeLines.forEach(element => {
+        // Adding each recipe line into the recipe array
+        recipe.push(element.dataset.ingredient);
+    });
 
 
 </script>
