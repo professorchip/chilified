@@ -1,8 +1,25 @@
+.recipecontainer {
+    color: black;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 400px;
+    background-color: white;
+    padding: 25px;
+    margin-top: 30px;
+    border-radius: 10px;
+    box-shadow: 1px 3px #2e2e2e;
+}
+
+.ingredients {
+    margin-top: 30px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
 .container {
     display: grid;
     align-items: center;
     justify-content: center;
-    margin-top: 10%;
 }
 
 .ingredient {
@@ -16,6 +33,7 @@
     border: none;
     border-radius: 5px;
     border-color: white;
+    box-shadow: 1px 3px #2e2e2e;
 }
 
 .ingredient:active {
@@ -24,5 +42,5 @@
 
 body {
     margin: 0 0 0 0;
-    background-color: rgb(215, 215, 215);
+    background-color: rgb(193, 193, 193);
 }
