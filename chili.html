@@ -29,7 +29,7 @@
     </div>
 </body>
 <script>
-    const ingredients = {
+    const ingredientsObject = {
         beef: {
             name: 'beef',
             qty: 1,
@@ -63,59 +63,48 @@
     const recipeMap = new Map();
 
     function pluralize(input, qty) {
-        const item = ingredients[input];
-        const ingName = item.name;
+        const item = ingredientsObject[input];
         const ingQty = item.qty;
-        const ingUnit = item.unit;
-        if (ingQty === 1) {
-            // console.log('only 1');
-            return `${ingUnit}`;
-        } else {
-            // console.log('more than 1');
-            return `${ingUnit}s`;
-        }
-    }
-
-    function isAre(qty) {
-        return qty === 1 ? 'is' : 'are';
+        const ingName = item.name; // Unused as of now
+        const ingUnit = item.unit; // Unused as of now
+        return ingQty === 1 ? `${ingUnit}` : `${ingUnit}s`;
     }
 
     function ingredientSentence(input) {
         // console.log(input);
-        const item = ingredients[input];
+        const item = ingredientsObject[input];
         const qty = item.qty;
         const food = input;
         const sentence = ` - ${qty} ${pluralize(String(input), qty)} of ${input}`;
         return sentence;
     }
 
-    function refreshRecipe(buttomItem, target) {
+    // Refresh and display the updated information for the ingredient
+    function refreshRecipe(eventIngredient, target) {
         recipeLines.forEach((item) => {
             if (target.dataset.ingredient === item.dataset.ingredient) {
-                item.innerText = ingredientSentence(buttomItem);
-                console.log('recipe changed');
+                item.innerText = ingredientSentence(eventIngredient);
+                //console.log('recipe changed');
             }
         })
     }
-    // Empty test comment
 
-    function handleClick(buttomItem, target) {
-        // Increment ingredient clicked
-        const ingredientsObject = ingredients[buttomItem];
-        ingredientsObject.qty++;
-        // Update page with new value
-        refreshRecipe(buttomItem, target);
+    function handleClick(eventIngredient, target) {
+        const thisIngredient = ingredientsObject[eventIngredient]; // thisIngredient = the place in the object that matches the ingredient clicked on the button 
+        thisIngredient.qty++;
+        refreshRecipe(eventIngredient, target);
     }
 
+    // Add eventListener to each button
     ingredientButtons.forEach((button) => {
         button.addEventListener('click', (event) => {
             handleClick(event.target.dataset.ingredient, event.target);
         });
     })
 
-    recipeLines.forEach(element => {
-        // Adding each recipe line into the recipe array
-        recipe.push(element.dataset.ingredient);
+    // Add each recipe line into the recipe array
+    recipeLines.forEach(event => {
+        recipe.push(event.dataset.ingredient);
     });
 
 
