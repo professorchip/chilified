@@ -31,12 +31,19 @@ const recipeLines = document.querySelectorAll('.recipeingredient'); // Lines in 
 const recipe = []; // An array of the lines in the recipe section
 const recipeMap = new Map();
 
+
 function pluralize(input, qty) {
     const item = ingredientsObject[input];
     const ingQty = item.qty;
     const ingName = item.name; // Unused as of now
     const ingUnit = item.unit; // Unused as of now
-    return ingQty === 1 ? `${ingUnit}` : `${ingUnit}s`;
+    let sentenceEnd;
+    if(input !== 'onion') {
+        sentenceEnd = ` of ${input}`;
+    } else if (input === 'onion') {
+        sentenceEnd = '';
+    }
+    return ingQty === 1 ? `${ingUnit} of ${input}` : `${ingUnit}s${sentenceEnd}`;
 }
 
 function ingredientSentence(input) {
@@ -44,7 +51,7 @@ function ingredientSentence(input) {
     const item = ingredientsObject[input];
     const qty = item.qty;
     const food = input;
-    const sentence = ` - ${qty} ${pluralize(String(input), qty)} of ${input}`;
+    const sentence = ` - ${qty} ${pluralize(String(input), qty)}`;
     return sentence;
 }
 
